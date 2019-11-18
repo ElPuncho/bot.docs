@@ -1,24 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
 import requests
+import filesystemhandler.py as fsh
 from bs4 import BeautifulSoup 
 
 class Crawler:
     
     def __init__(self, query):
         self.query = query
-        self.rootDirectory = os.getcwd() + self.getSlashForOsVersion() + "data" + self.getSlashForOsVersion()
-    
-    def getSlashForOsVersion(self):
-        if os.name == "posix":
-            return "/"
-        return "\\"
-        
-    def checkDirElseMkDir(self, folder):
-        if not os.path.isdir(folder):
-            os.mkdir(folder)
+        self.handler = fsh.FileSystemHandler()
+        self.rootDirectory = self.handler.getRootDirectory()
         
     def getLibUrl(self):
         searchUrl = "https://api.duckduckgo.com/?q=" + self.query.split(":")[0] + " " + self.query.split(":")[1] + "&format=json&pretty=1"
@@ -34,8 +26,8 @@ class Crawler:
         return soup
     
     def writeTextToFile(self, soup):
-        self.checkDirElseMkDir(self.rootDirectory + self.query.split(":")[0])
-        file = open(self.rootDirectory + self.query.split(":")[0] + self.getSlashForOsVersion() + self.query.split(":")[1] + ".txt", "w", encoding = "utf8")
+        self.handler.checkDirElseMkDir(self.rootDirectory + self.query.split(":")[0])
+        file = open(self.rootDirectory + self.query.split(":")[0] + self.handler.getSlashForOsVersion() + self.query.split(":")[1] + ".txt", "w", encoding = "utf8")
         for div_tag  in soup(["p", "div"]):
             file.write(div_tag.text)
         file.close()

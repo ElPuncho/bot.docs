@@ -18,6 +18,10 @@ class FileSystemHandler:
             return "/"
         return "\\"
     
+    def checkDirElseMkDir(self, folder):
+        if not os.path.isdir(folder):
+            os.mkdir(folder)
+    
     def getSearchFilePath(self, subdir, filename):
         return self.getRootDirectory() + self.getSlashForOsVersion() + subdir + self.getSlashForOsVersion() + filename
     
