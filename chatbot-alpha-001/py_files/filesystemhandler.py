@@ -32,7 +32,3 @@ class FileSystemHandler:
                 os.rmdir(folder + self.getSlashForOsVersion() + filename)
             else:
                 os.remove(folder + self.getSlashForOsVersion() + filename)
-            
-if __name__ == "__main__":
-    h = FileSystemHandler()
-    h.deleteSessionTempFiles(h.getRootDirectory())

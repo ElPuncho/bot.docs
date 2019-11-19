@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-import filesystemhandler.py as fsh
+import py_files.filesystemhandler as fsh
 from bs4 import BeautifulSoup 
 
 class Crawler:
@@ -26,13 +26,8 @@ class Crawler:
         return soup
     
     def writeTextToFile(self, soup):
-        self.handler.checkDirElseMkDir(self.rootDirectory + self.query.split(":")[0])
-        file = open(self.rootDirectory + self.query.split(":")[0] + self.handler.getSlashForOsVersion() + self.query.split(":")[1] + ".txt", "w", encoding = "utf8")
+        self.handler.checkDirElseMkDir(self.rootDirectory + self.handler.getSlashForOsVersion() + self.query.split(":")[0])
+        file = open(self.rootDirectory + self.handler.getSlashForOsVersion() +  self.query.split(":")[0] + self.handler.getSlashForOsVersion() + self.query.split(":")[1] + ".txt", "w", encoding = "utf8")
         for div_tag  in soup(["p", "div"]):
             file.write(div_tag.text)
         file.close()
-
-if __name__ == "__main__":
-    c = Crawler("python:min:how to array")
-    c.writeTextToFile(c.getTextFromWebsite(c.getLibUrl()))
-    
