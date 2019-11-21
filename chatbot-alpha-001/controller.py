@@ -21,5 +21,5 @@ class ControlManager:
 if __name__ == "__main__":
     con = ControlManager()
     con.initSession()
-    con.crawlQuery("python:math:sin")
+    con.crawlQuery("python:math:how to uese sinus")
     #con.closeSession()

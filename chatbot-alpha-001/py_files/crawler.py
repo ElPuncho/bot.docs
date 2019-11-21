@@ -13,10 +13,12 @@ class Crawler:
         self.rootDirectory = self.handler.getRootDirectory()
         
     def getLibUrl(self):
-        searchUrl = "https://api.duckduckgo.com/?q=" + self.query.split(":")[0] + " " + self.query.split(":")[1] + "&format=json&pretty=1"
+        #duckduckgo api url "https://api.duckduckgo.com/?q=" + self.query.split(":")[0] + " " + self.query.split(":")[1] + "&format=json&pretty=1"
+        #duckduckgo json access data["AbstractURL"]
+        searchUrl = "https://www.googleapis.com/customsearch/v1?q=" + self.query.split(":")[0] + " " + self.query.split(":")[1] + "&cx=007916430864706508896:5x4nlnwradj&key=AIzaSyBa0tj2m9x3k7ZbkKcia30TLiG6yzulFoY"
         request = requests.get(searchUrl)
         data = request.json()
-        return data["AbstractURL"]
+        return data["items"][0]["formattedUrl"]
     
     def getTextFromWebsite(self, URL):
         request = requests.get(URL)
