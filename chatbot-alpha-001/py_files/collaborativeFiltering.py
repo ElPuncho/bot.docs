@@ -21,8 +21,7 @@ class CollaborativeFiltering:
 
     def __init__(self, dataFolderPath, user_input):
         self.dataFolderPath = dataFolderPath
-        self.sentences_tokens = list()
-        self.buildSentencesTokens()
+        self.sentences_tokens = self.buildSentencesTokens()
         self.user_input = user_input
 
     def generateResponse(self):
@@ -64,11 +63,12 @@ class CollaborativeFiltering:
         self.sentences_tokens.append(self.user_input)
         TfidfVec = TfidfVectorizer(tokenizer=self.normaliseLemmatisedTokens, stop_words='english')
         tfidf = TfidfVec.fit_transform(self.sentences_tokens)
+        del self.sentences_tokens[-1]
         return tfidf
 
     def buildSentencesTokens(self):
         table = {10 : ' '}
-        self.sentences_tokens = list(set([token.strip().translate(table) for token in nltk.sent_tokenize(self.fetchData())]))
+        return list(set([token.strip().translate(table) for token in nltk.sent_tokenize(self.fetchData())]))
 
     def fetchData(self):
         all_folders = os.listdir(self.dataFolderPath)
