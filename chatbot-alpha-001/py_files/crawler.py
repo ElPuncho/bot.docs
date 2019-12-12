@@ -18,7 +18,7 @@ class Crawler:
         searchUrl = "https://www.googleapis.com/customsearch/v1?q=" + self.query.split(":")[0] + " " + self.query.split(":")[1] + "&cx=007916430864706508896:5x4nlnwradj&key=AIzaSyBa0tj2m9x3k7ZbkKcia30TLiG6yzulFoY"
         request = requests.get(searchUrl)
         data = request.json()
-        return data["items"][0]["formattedUrl"]
+        return data["items"][0]["link"]
     
     def getTextFromWebsite(self, URL):
         request = requests.get(URL)
