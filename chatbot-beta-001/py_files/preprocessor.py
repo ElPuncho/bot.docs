@@ -16,8 +16,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline, FeatureUnion
 
-from sklearn.cluster import KMeans
-
 
 class Preprocessor:
     def __init__(self, dataFolderPath, userInput):
@@ -76,7 +74,7 @@ class Preprocessor:
 
     def removeStopWords(self):
         stop = set(stopwords.words('english'))
-        stop.update(['compute', 'calculate', 'get'])
+        stop.update(['compute', 'calculate', 'get', 'use'])
         words = str()
         noStops = list()
         for line in self.removePunctuations():
