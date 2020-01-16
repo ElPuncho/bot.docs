@@ -30,7 +30,6 @@ class pearsonTest(unittest.TestCase):
 
     def testGenerateResponse(self):
         self.assertIsNotNone(self.pearson.generateResponse())
-        print(self.pearson.generateResponse())
 
 
 if __name__ == '__main__':
