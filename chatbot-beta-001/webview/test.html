@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Docs B Webview alpha</title>
+    <script type="module">
+ 	 document.querySelector('#send').addEventListener('click', getResult);
+ 
+ 	 async function postData(url = '', data = "")
+ 	 {
+        	// Default options are marked with *
+         	const response = await fetch(url, {
+        	method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        	mode: 'no-cors', // no-cors, *cors, same-origin
+        	headers: {
+        	'Content-Type': 'application/javascript' //'application/json'
+        	// 'Content-Type': 'application/x-www-form-urlencoded',
+        	},
+        	body: data // body data type must match "Content-Type" header
+        	});
+        	return await response;  
+	 }
+
+  	function getResult ()
+  	{
+        	var query = document.getElementById("query").value //{ name: document.getElementById("query").value};
+        	postData("http://localhost:65432", query)
+				.then((result) => {
+                document.querySelector("output").textContent = String(result);
+			})
+				.catch((err) => console.log(err));
+  	};
+    </script>
+</head>
+<body>
+	<h1>Bot Docs B Webview alpha</h1>
+	<p>Usage: proglanguage:lib:function</p>
+	<form>
+  		<label for="query">Query:
+    			<input id="query" name="query">
+  		</label>>
+		<button type="button" id="send">Send Query</button>
+	</form>
+	<label>Query Result:
+		<output></output>
+        </label>
+</body>
+</html>
