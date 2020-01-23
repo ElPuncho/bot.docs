@@ -1,10 +1,8 @@
 import sys
-sys.path.append('..')
 import unittest
-from scipy.stats import pearsonr
-import nltk
 import py_files.collaborativeFiltering as cf
 import numpy as np
+sys.path.append('..')
 
 
 class collaborativeFilteringtest(unittest.TestCase):
