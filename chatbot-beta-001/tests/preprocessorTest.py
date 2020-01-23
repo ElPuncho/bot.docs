@@ -1,12 +1,8 @@
 import sys
-sys.path.append('..')
 import unittest
-from scipy.stats import pearsonr
-import nltk
 import py_files.preprocessor as pre
-import numpy as np
 from nltk.corpus import stopwords
-from nltk.tag import pos_tag
+sys.path.append('..')
 
 
 class PreprocessorTest(unittest.TestCase):
@@ -28,23 +24,32 @@ class PreprocessorTest(unittest.TestCase):
             self.assertNotIn(self.preprocessor.removeStopWords()[0], st)
 
     def testNegationHandling(self):
-        negations=["no","not","cant","cannot","never","less","without","barely","hardly","rarely","noway","didnt"]
+        negations = ["no", "not", "cant", "cannot", "never", "less", "without"]
+        negations.append("barely")
+        negations.append("hardly")
+        negations.append("rarely")
+        negations.append("noway")
+        negations.append("didnt")
         for word in self.preprocessor.negationHandling():
             for neg in negations:
                 self.assertNotEqual(neg, word)
 
     def testMeaningfulWords(self):
         self.assertIsNotNone(self.preprocessor.meaningfulWords())
-        self.assertLessEqual(len(self.preprocessor.meaningfulWords()), len(self.preprocessor.negationHandling()))
+        num = len(self.preprocessor.meaningfulWords())
+        self.assertLessEqual(num, len(self.preprocessor.negationHandling()))
 
     def testStemming(self):
         self.assertIsNotNone(self.preprocessor.stemming())
-        for w1, w2 in zip(self.preprocessor.stemming(), self.preprocessor.meaningfulWords()):
+        words = self.preprocessor.meaningfulWords()
+        for w1, w2 in zip(self.preprocessor.stemming(), words):
             self.assertLessEqual(len(w1), len(w2))
 
     def testVectoriseData(self):
-        self.assertIsNotNone(self.preprocessor.vectoriseData())
-        self.assertEqual(self.preprocessor.vectoriseData().shape[0], len(self.preprocessor.stemming()))
+        data = self.preprocessor.vectoriseData()
+        self.assertIsNotNone(data)
+        self.assertEqual(data.shape[0], len(self.preprocessor.stemming()))
+
 
 if __name__ == '__main__':
     unittest.main()
