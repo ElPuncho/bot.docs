@@ -1,8 +1,6 @@
-import sys
 import unittest
 import py_files.kmeans as km
 import py_files.preprocessor as pre
-sys.path.append('..')
 
 
 class kmeansTest(unittest.TestCase):
@@ -23,8 +21,8 @@ class kmeansTest(unittest.TestCase):
         lenKMeans = len(self.kmeans.generateModel())
         self.assertEqual(self.kmeans.tfidfMatrix.shape[0], lenKMeans)
 
-    def testGetRelevantSentences(self):
-        self.assertIsNotNone(self.kmeans.getRelevantSentences())
+    def testGenerateResponse(self):
+        self.assertIsNotNone(self.kmeans.generateResponse())
 
 
 if __name__ == '__main__':
