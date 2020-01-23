@@ -9,11 +9,13 @@ import numpy as np
 
 class collaborativeFilteringtest(unittest.TestCase):
 
-    filter = cf.CollaborativeFiltering('data/', 'python:math: how to use cosine')
+    query = 'python:math: how to use cosine'
+    filter = cf.CollaborativeFiltering('data/', query)
 
     def testInit(self):
+        query = 'python:math: how to use cosine'
         self.assertEqual(self.filter.dataFolderPath, 'data/')
-        self.assertEqual(self.filter.user_input, 'python:math: how to use cosine')
+        self.assertEqual(self.filter.user_input, query)
         self.assertIsNotNone(self.filter.sentences_tokens)
 
     def testFetchData(self):
@@ -25,33 +27,41 @@ class collaborativeFilteringtest(unittest.TestCase):
         self.assertIsInstance(self.filter.buildSentencesTokens(), list)
 
     def testLemmatiseTokens(self):
-        self.assertIsNotNone(self.filter.lemmatiseTokens(self.filter.sentences_tokens))
+        sentenceTokens = self.filter.sentences_tokens
+        self.assertIsNotNone(self.filter.lemmatiseTokens(sentenceTokens))
 
     def testNormaliseLemmatisedTokens(self):
-        self.assertIsNotNone(self.filter.normaliseLemmatisedTokens(self.filter.fetchData()))
-        self.assertNotIn(self.filter.normaliseLemmatisedTokens(self.filter.fetchData())[0], '.')
-        self.assertEqual(self.filter.normaliseLemmatisedTokens(self.filter.fetchData())[0],
-                        self.filter.normaliseLemmatisedTokens(self.filter.fetchData())[0].lower())
+        data = self.filter.fetchData()
+        normaliseLemmatisedToken = self.filter.normaliseLemmatisedTokens(data)
+        lower = normaliseLemmatisedToken[0].lower()
+        self.assertIsNotNone(normaliseLemmatisedToken)
+        self.assertNotIn(normaliseLemmatisedToken[0], '.')
+        self.assertEqual(normaliseLemmatisedToken[0], lower)
 
     def testVectoriseData(self):
-        self.assertIsNotNone(self.filter.vectoriseData())
-        self.assertEqual(self.filter.vectoriseData().shape[0], len(self.filter.sentences_tokens)+1)
+        data = self.filter.vectoriseData()
+        self.assertIsNotNone(data)
+        self.assertEqual(data.shape[0], len(self.filter.sentences_tokens)+1)
 
     def testPearsonCoeffs(self):
         p = self.filter.vectoriseData()[-1]
         self.assertEqual(self.filter.pearson_coeffs(p, p)[0], 1.0)
 
     def testGetPearsonSimOfUserInputAndData(self):
-        self.assertEqual(len(self.filter.sentences_tokens)+1, len(self.filter.getPearsonSimOfUserInputAndData()))
+        numA = len(self.filter.sentences_tokens)+1
+        numB = len(self.filter.getPearsonSimOfUserInputAndData())
+        self.assertEqual(numA, numB)
 
     def testCorrelationMatch(self):
-        self.assertFalse(self.filter.correlationMatch(np.array([0,1])))
-        self.assertTrue(self.filter.correlationMatch(np.array([1,2])))
+        self.assertFalse(self.filter.correlationMatch(np.array([0, 1])))
+        self.assertTrue(self.filter.correlationMatch(np.array([1, 2])))
 
     def testGetIndexOfTopKMatches(self):
-        self.assertIsNotNone(self.filter.getIndexOfTopKMatches(self.filter.getPearsonSimOfUserInputAndData(), 1))
-        self.assertEqual(len(self.filter.getIndexOfTopKMatches(self.filter.getPearsonSimOfUserInputAndData(), 1)), 1)
-        self.assertIsInstance(self.filter.getIndexOfTopKMatches(self.filter.getPearsonSimOfUserInputAndData(), 1), np.ndarray)
+        data = self.filter.getPearsonSimOfUserInputAndData(),
+        index = self.filter.getIndexOfTopKMatches(data, 1)
+        self.assertIsNotNone(index)
+        self.assertEqual(len(index), 1)
+        self.assertIsInstance(index, np.ndarray)
 
     def testGenerateResponse(self):
         self.assertEqual(self.filter.generateResponse()[0:3], 'cos')
