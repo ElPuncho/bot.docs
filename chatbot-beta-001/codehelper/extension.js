@@ -12,7 +12,7 @@ const { spawn } = require('child_process')
 
 function showQueryAndResultAsVsMessage(query, result)
 {
-	vscode.window.showInformationMessage(`your Query: ${query} \n your Result: ${result}`);
+	vscode.window.showInformationMessage(`your Query: ${query} | your Result: ${result}`);
 }
 
 function callPythonScript(script, args)
@@ -29,11 +29,9 @@ function getHelp()
 {
 	vscode.window.showInformationMessage(`for help click the arraw on this message 
 	| c++ = c++:function:your question | java = java:library:your question 
-	|python = pyhon:library:your question | `);
-	/*vscode.window.showInformationMessage("python pandas = pandas:library/function:your question");
-	vscode.window.showInformationMessage("python numpy = numpy:library/function:your question");
-	vscode.window.showInformationMessage("python matplotlib = matplotlib:library/function:your question");
-	vscode.window.showInformationMessage("rust = rust:library:your question");*/
+	| python = pyhon:library:your question | python pandas = pandas:library/function:your question
+	| python numpy = numpy:library/function:your question | python matplotlib = matplotlib:library/function:your question
+	| rust = rust:library:your question`);
 }
 
 async function getUserInputAndExecuteQuery()
