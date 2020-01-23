@@ -14,10 +14,13 @@ class Kmeans:
         kmeans.cluster_centers_
         return labels
 
-    def getRelevantSentences(self):
+    def generateResponse(self):
         relevantSentences = str()
         labels = self.generateModel()
         idx = np.where(labels == labels[-1])
         for i in idx[0][:-1]:
             relevantSentences += self.sentences[int(i)] + '\n'
-        return relevantSentences
+        if relevantSentences:
+            return relevantSentences
+        else:
+            return "Sorry dont know about that one"
