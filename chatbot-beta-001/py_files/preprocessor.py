@@ -104,5 +104,5 @@ class Preprocessor:
             for data in os.listdir(self.dataFolderPath+'/'+folder):
                 with open(self.dataFolderPath+folder+'/'+data,'r', encoding='utf8', errors ='ignore') as f:
                     rawData += f.read().lower()
-        rawData += self.userInput.lower()
+        rawData += '\n' + self.userInput.lower()
         return rawData
