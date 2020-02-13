@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import py_files.filesystemhandler as fsh
 import py_files.crawler as cwl
-import py_files.collaborativeFiltering as cfl
-
+import py_files.preprocessor as pre
+import py_files.pearson as pear
+import py_files.kmeans as kmeans
 
 class ControlManager:
     def __init__(self, query):
@@ -26,16 +27,20 @@ class ControlManager:
         self.crawlerObject.writeTextToFile(text)
 
     def executeFiltering(self):
-        file = self.fileHandler.getRootDirectory()
-        file += self.fileHandler.getSlashForOsVersion()
+        file = self.fileHandler.getSearchFilePath(self.query.split(":")[0],
+                                                  self.query.split(":")[1] +
+                                                  ".txt")
         searchString = self.query.split(":")[2]
-        self.filterObject = cfl.CollaborativeFiltering(file, searchString)
-        return self.filterObject.generateResponse()
-
-
-if __name__ == "__main__":
-    con = ControlManager("c++:vector:create vector")
-    con.initSession()
-    con.crawlQuery()
-    print(con.executeFiltering())
-    con.closeSession()
+        self.filterObject = pre.Preprocessor(file, searchString)
+        matrix = self.filterObject.vectoriseData()
+        text = self.filterObject.removeDuplicateLines()
+        
+        t = pear.Pearson(matrix, text)
+        with open(self.fileHandler.getSearchFilePath(self.query.split(":")[0],"preprocessed.txt"), "w", encoding="utf8") as f:
+            f.write('\n'.join([x for x in t.generateResponse().split('\n') if len(x) <= 1000]))
+        
+        self.filterObject = pre.Preprocessor(self.fileHandler.getSearchFilePath(self.query.split(":")[0],"preprocessed.txt"), searchString)
+        matrix = self.filterObject.vectoriseData()
+        text = self.filterObject.removeDuplicateLines()
+        km = kmeans.Kmeans(matrix, text)
+        return km.generateResponse()
