@@ -1,4 +1,3 @@
-
 import numpy as np
 from scipy.stats import pearsonr
 from scipy import sparse
@@ -13,7 +12,7 @@ class Pearson:
 
     def generateResponse(self):
         response = str()
-        topKMatches = 3
+        topKMatches = 20
         indexTopKSentences = self.getIndexOfTopKMatches(topKMatches)
 
         if(self.correlationMatch()):
@@ -38,6 +37,10 @@ class Pearson:
     def getPearsonCoeffsOfUserInputAndData(self):
         coeff = list()
         userInput = self.tfidfMatrix.toarray()[-1]
-        for row in self.tfidfMatrix:
-            coeff.append((pearsonr(userInput, row.getrow(0).toarray()[0]))[0])
+        tfidfWithOutUserInput = self.tfidfMatrix[:-1]
+        for row in tfidfWithOutUserInput:
+            if np.std(row.getrow(0).toarray()[0]) != 0:
+                coeff.append((pearsonr(userInput, row.getrow(0).toarray()[0]))[0])
+            else:
+                coeff.append(0)
         return coeff
