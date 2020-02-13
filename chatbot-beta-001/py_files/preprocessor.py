@@ -24,14 +24,15 @@ class Preprocessor:
         self.lines = self.fetchData().split('\n')
 
     def vectoriseData(self):
-        vectorizer = Pipeline([('vectorizer', CountVectorizer()), ('tfidf', TfidfTransformer())])
+        vectorizer = Pipeline([('vectorizer', CountVectorizer()),
+                              ('tfidf', TfidfTransformer())])
         X = vectorizer.fit_transform(self.stemming())
         return X
 
     def stemming(self):
         words = str()
         stemmedWords = list()
-        st=PorterStemmer()
+        st = PorterStemmer()
         for line in self.meaningfulWords():
             words = ''
             for w in line.split():
@@ -40,9 +41,10 @@ class Preprocessor:
         return stemmedWords
 
     def meaningfulWords(self):
-        meaningfulWords=[]
+        meaningfulWords = []
         words = str()
-        tags=['VB','VBP','VBD','VBG','VBN','JJ','JJR','JJS','RB','RBR','RBS','UH',"NN",'NNP']
+        tags = ['VB', 'VBP', 'VBD', 'VBG', 'VBN',
+                'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS', 'UH', 'NN', 'NNP']
         text = self.negationHandling()
         for line in text:
             taggedWord = pos_tag(line.split())
@@ -54,22 +56,23 @@ class Preprocessor:
         return meaningfulWords
 
     def negationHandling(self):
-        counter=False
-        modNegations=[]
+        counter = False
+        modNegations = []
         words = str()
-        negations=["no","not","cant","cannot","never","less","without","barely","hardly","rarely","noway","didnt"]
+        negations = ['no', 'not', 'cant', 'cannot', 'never', 'less', 'without',
+                     'barely', 'hardly', 'rarely', 'noway', 'didnt']
         text = self.removeStopWords()
         for line in text:
             words = ''
-            for i,j in enumerate(line.split()):
-                if j in negations and i<len(line.split())-1:
+            for i, j in enumerate(line.split()):
+                if j in negations and i < len(line.split())-1:
                     words += str(line.split()[i]+'-'+line.split()[i+1]) + ' '
-                    counter=True
+                    counter = True
                 else:
                     if counter is False:
                         words += line.split()[i] + ' '
                     else:
-                        counter=False
+                        counter = False
             modNegations.append(words.strip())
         return modNegations
 
@@ -92,7 +95,7 @@ class Preprocessor:
         text = self.appendLoweredUserInput()
         for line in text:
             words = ''
-            for w in re.sub(r'[^\w\s]','',line).split():
+            for w in re.sub(r'[^\w\s]', '', line).split():
                 words += w + ' '
             noPunctuations.append(words.strip())
         return noPunctuations
@@ -142,9 +145,9 @@ class Preprocessor:
             groupedByParagraphsText += temp.strip()
         return groupedByParagraphsText
 
-
     def fetchData(self):
         rawData = str()
-        with open(self.dataFolderPath, 'r', encoding='utf8', errors='ignore') as f:
+        with open(self.dataFolderPath, 'r', encoding='utf8',
+                  errors='ignore') as f:
             rawData += f.read().lower()
         return rawData
