@@ -21,6 +21,7 @@ class Preprocessor:
     def __init__(self, dataFolderPath, userInput):
         self.dataFolderPath = dataFolderPath
         self.userInput = userInput
+        self.lines = self.fetchData().split('\n')
 
     def vectoriseData(self):
         vectorizer = Pipeline([('vectorizer', CountVectorizer()), ('tfidf', TfidfTransformer())])
@@ -88,7 +89,7 @@ class Preprocessor:
     def removePunctuations(self):
         words = str()
         noPunctuations = list()
-        text = self.fetchData().split('.')
+        text = self.appendLoweredUserInput()
         for line in text:
             words = ''
             for w in re.sub(r'[^\w\s]','',line).split():
@@ -96,13 +97,54 @@ class Preprocessor:
             noPunctuations.append(words.strip())
         return noPunctuations
 
+    def appendLoweredUserInput(self):
+        textWithUserInput = self.removeDuplicateLines()
+        textWithUserInput.append(self.userInput.lower())
+        return textWithUserInput
+
+    def removeDuplicateLines(self):
+        lines = self.removeEmptyLines()
+        return list(dict.fromkeys(lines))
+
+    def removeEmptyLines(self):
+        lines = self.getParagraphs()
+        return list(filter(None, lines))
+
+    def getParagraphs(self):
+        text = self.fetchData().split('\n')
+        groupedByParagraphsText = self.groupTextByParagraphs().split('\n')
+        if not self.enoughParagraphs():
+            return text
+        else:
+            return groupedByParagraphsText
+
+    def enoughParagraphs(self):
+        count = 0
+        minNumOfParagrpahs = 5
+        for line in self.lines:
+            if line == '':
+                count += 1
+        if count <= minNumOfParagrpahs:
+            return False
+        else:
+            return True
+
+    def groupTextByParagraphs(self):
+        temp = str()
+        groupedByParagraphsText = str()
+        for line in self.lines:
+            if line is not '':
+                temp += line.strip() + ' '
+            elif line == '' and temp != '':
+                groupedByParagraphsText += temp.strip() + '\n'
+                temp = ''
+        if temp != '':
+            groupedByParagraphsText += temp.strip()
+        return groupedByParagraphsText
+
 
     def fetchData(self):
-        allFolders = os.listdir(self.dataFolderPath)
         rawData = str()
-        for folder in allFolders:
-            for data in os.listdir(self.dataFolderPath+'/'+folder):
-                with open(self.dataFolderPath+folder+'/'+data,'r', encoding='utf8', errors ='ignore') as f:
-                    rawData += f.read().lower()
-        rawData += '\n' + self.userInput.lower()
+        with open(self.dataFolderPath, 'r', encoding='utf8', errors='ignore') as f:
+            rawData += f.read().lower()
         return rawData
