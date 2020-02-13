@@ -25,14 +25,15 @@ class Pearson:
 
     def correlationMatch(self):
         highestCorrelation = np.sort(self.pearsonCoeffs)[-2]
-        if(highestCorrelation<=0):
+        if(highestCorrelation <= 0):
             return False
         else:
             return True
 
     def getIndexOfTopKMatches(self, k):
-        index_top_k_sentences = np.asarray(self.pearsonCoeffs).argsort()[-(k+1):-1]
-        return index_top_k_sentences
+        indexTopKSentences = np.asarray(self.pearsonCoeffs)
+        indexTopKSentences = indexTopKSentences.argsort()[-(k+1):-1]
+        return indexTopKSentences
 
     def getPearsonCoeffsOfUserInputAndData(self):
         coeff = list()
@@ -40,7 +41,8 @@ class Pearson:
         tfidfWithOutUserInput = self.tfidfMatrix[:-1]
         for row in tfidfWithOutUserInput:
             if np.std(row.getrow(0).toarray()[0]) != 0:
-                coeff.append((pearsonr(userInput, row.getrow(0).toarray()[0]))[0])
+                row = row.getrow(0).toarray()[0]
+                coeff.append((pearsonr(userInput, row))[0])
             else:
                 coeff.append(0)
         return coeff
