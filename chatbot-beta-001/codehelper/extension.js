@@ -17,7 +17,7 @@ function showQueryAndResultAsVsMessage(query, result)
 
 function callPythonScript(script, args)
 {
-	const sensor = spawn('python', [script, args]);
+	const sensor = spawn('python3', [script, args]);
 	sensor.stdout.on('data', function(data)
 	{
 		console.log(String(data))
