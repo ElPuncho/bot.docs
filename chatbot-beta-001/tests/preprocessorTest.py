@@ -1,16 +1,17 @@
 import sys
-sys.path.append('..')
 import unittest
 import py_files.preprocessor as pre
 from nltk.corpus import stopwords
-
+sys.path.append('..')
 
 
 class PreprocessorTest(unittest.TestCase):
-    preprocessor = pre.Preprocessor('../tests/data/math/numpyMathFunctions.txt', 'how to compute cosine')
+    path = '../tests/data/math/numpyMathFunctions.txt'
+    preprocessor = pre.Preprocessor(path, 'how to compute cosine')
 
     def testInit(self):
-        self.assertEqual(self.preprocessor.dataFolderPath, '../tests/data/math/numpyMathFunctions.txt')
+        path = '../tests/data/math/numpyMathFunctions.txt'
+        self.assertEqual(self.preprocessor.dataFolderPath, path)
         self.assertEqual(self.preprocessor.userInput, 'how to compute cosine')
         self.assertIsNotNone(self.preprocessor.lines)
 
@@ -19,8 +20,10 @@ class PreprocessorTest(unittest.TestCase):
 
     def testGroupTextByParagraphs(self):
         self.assertIsNotNone(self.preprocessor.groupTextByParagraphs())
-        self.assertEqual(len(self.preprocessor.groupTextByParagraphs().split('\n')), 1)
-        self.assertNotEqual(self.preprocessor.groupTextByParagraphs().split('\n')[0], '')
+        self.assertEqual(len(self.preprocessor.groupTextByParagraphs()
+                             .split('\n')), 1)
+        self.assertNotEqual(self.preprocessor.groupTextByParagraphs()
+                            .split('\n')[0], '')
 
     def testEnoughParagraphs(self):
         self.assertFalse(self.preprocessor.enoughParagraphs())
@@ -43,7 +46,8 @@ class PreprocessorTest(unittest.TestCase):
 
     def testAppendLoweredUserInput(self):
         self.assertIsNotNone(self.preprocessor.appendLoweredUserInput())
-        self.assertEqual(self.preprocessor.appendLoweredUserInput()[-1], self.preprocessor.userInput)
+        self.assertEqual(self.preprocessor.appendLoweredUserInput()[-1],
+                         self.preprocessor.userInput)
 
     def testRemovePunctuation(self):
         self.assertNotIn(self.preprocessor.removePunctuations()[0], '.')
