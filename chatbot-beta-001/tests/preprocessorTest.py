@@ -1,19 +1,49 @@
 import sys
+sys.path.append('..')
 import unittest
 import py_files.preprocessor as pre
 from nltk.corpus import stopwords
-sys.path.append('..')
+
 
 
 class PreprocessorTest(unittest.TestCase):
-    preprocessor = pre.Preprocessor('data/', 'how to compute cosine')
+    preprocessor = pre.Preprocessor('../tests/data/math/numpyMathFunctions.txt', 'how to compute cosine')
 
     def testInit(self):
-        self.assertEqual(self.preprocessor.dataFolderPath, 'data/')
+        self.assertEqual(self.preprocessor.dataFolderPath, '../tests/data/math/numpyMathFunctions.txt')
         self.assertEqual(self.preprocessor.userInput, 'how to compute cosine')
+        self.assertIsNotNone(self.preprocessor.lines)
 
     def testFetchData(self):
         self.assertIsNotNone(self.preprocessor.fetchData())
+
+    def testGroupTextByParagraphs(self):
+        self.assertIsNotNone(self.preprocessor.groupTextByParagraphs())
+        self.assertEqual(len(self.preprocessor.groupTextByParagraphs().split('\n')), 1)
+        self.assertNotEqual(self.preprocessor.groupTextByParagraphs().split('\n')[0], '')
+
+    def testEnoughParagraphs(self):
+        self.assertFalse(self.preprocessor.enoughParagraphs())
+
+    def testGetParagraphs(self):
+        self.assertIsNotNone(self.preprocessor.getParagraphs())
+
+    def testRemoveEmptyLines(self):
+        self.assertIsNotNone(self.preprocessor.removeEmptyLines())
+        for line in self.preprocessor.removeEmptyLines():
+            self.assertNotEqual(line, '')
+
+    def testRemoveDuplicateLines(self):
+        noDuplicateLines = self.preprocessor.removeDuplicateLines()
+        self.assertIsNotNone(noDuplicateLines)
+        for line in noDuplicateLines:
+            noDuplicateLinesWithOutLine = noDuplicateLines
+            del noDuplicateLinesWithOutLine[noDuplicateLines.index(line)]
+            self.assertNotIn(line, noDuplicateLinesWithOutLine)
+
+    def testAppendLoweredUserInput(self):
+        self.assertIsNotNone(self.preprocessor.appendLoweredUserInput())
+        self.assertEqual(self.preprocessor.appendLoweredUserInput()[-1], self.preprocessor.userInput)
 
     def testRemovePunctuation(self):
         self.assertNotIn(self.preprocessor.removePunctuations()[0], '.')
@@ -49,7 +79,6 @@ class PreprocessorTest(unittest.TestCase):
         data = self.preprocessor.vectoriseData()
         self.assertIsNotNone(data)
         self.assertEqual(data.shape[0], len(self.preprocessor.stemming()))
-
 
 if __name__ == '__main__':
     unittest.main()
