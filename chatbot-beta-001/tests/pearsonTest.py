@@ -1,14 +1,14 @@
 import sys
-sys.path.append('..')
 import unittest
 import py_files.pearson as p
 import py_files.preprocessor as pre
-
+sys.path.append('..')
 
 
 class pearsonTest(unittest.TestCase):
     query = 'how to compute base 10 logarithm'
-    preprocessor = pre.Preprocessor('../tests/data/math/numpyMathFunctions.txt', query)
+    path = '../tests/data/math/numpyMathFunctions.txt'
+    preprocessor = pre.Preprocessor(path, query)
     X = preprocessor.vectoriseData()
     sentences = preprocessor.removeDuplicateLines()
     pearson = p.Pearson(X, sentences)
