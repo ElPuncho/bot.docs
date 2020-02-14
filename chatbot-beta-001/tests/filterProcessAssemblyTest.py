@@ -1,4 +1,5 @@
 import sys
+import os
 import unittest
 import numpy as np
 import py_files.preprocessor as pre
@@ -9,7 +10,7 @@ sys.path.append('..')
 
 
 class FilterProcessAssemblyTest(unittest.TestCase):
-    filePath = '../tests/data/math/numpyMathFunctions.txt'
+    filePath = '..\\tests\\data\\math\\numpyMathFunctions.txt'
     searchString = 'how to compute cosine'
     fassembly = fpa.FilterProcessAssembly(filePath, searchString)
 
@@ -22,7 +23,12 @@ class FilterProcessAssemblyTest(unittest.TestCase):
                                    pre.Preprocessor))
 
     def testGetPreprocessedPath(self):
-        path = '/'.join(self.filePath.split('/')[:-1])+'/preprocessed.txt'
+        path = str()
+        if os.name == 'posix':
+            path = '/'.join(self.filePath.split('/')[:-1])+'/preprocessed.txt'
+        else:
+            path = '\\'\
+                    .join(self.filePath.split('\\')[:-1])+'\\preprocessed.txt'
         self.assertEqual(self.fassembly.getPreprocessedPath(), path)
 
     def testGetTfidfMatrix(self):
@@ -49,7 +55,7 @@ class FilterProcessAssemblyTest(unittest.TestCase):
         sentences = self.fassembly.getUnfilteredSentences()
         p = pear.Pearson(X, sentences)
         text = self.fassembly.dropResultsWithTooManyChars(p.generateResponse())
-        path = '/'.join(self.filePath.split('/')[:-1])+'/preprocessed.txt'
+        path = self.fassembly.getPreprocessedPath()
         self.fassembly.writeToFile(text)
         with open(path, 'r', encoding='utf8', errors='ignore') as f:
             self.assertIsNotNone(f.read())
