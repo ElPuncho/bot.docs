@@ -1,6 +1,7 @@
 import py_files.preprocessor as pre
 import py_files.pearson as pear
 import py_files.kmeans as kmeans
+import os
 
 
 class FilterProcessAssembly:
@@ -13,7 +14,9 @@ class FilterProcessAssembly:
         self.preprocessor = pre.Preprocessor(filePath, self.searchString)
 
     def getPreprocessedPath(self):
-        return '/'.join(self.filePath.split('/')[:-1])+'/preprocessed.txt'
+        if os.name == 'posix':
+            return '/'.join(self.filePath.split('/')[:-1])+'/preprocessed.txt'
+        return '\\'.join(self.filePath.split('\\')[:-1])+'\\preprocessed.txt'
 
     def getTfidifMatrix(self):
         return self.preprocessor.vectoriseData()
