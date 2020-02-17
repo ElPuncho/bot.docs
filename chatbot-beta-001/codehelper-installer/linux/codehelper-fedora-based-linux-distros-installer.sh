@@ -11,13 +11,7 @@ function installPython3()
 	then
 		echo "python3 allready installed"
 	else
-		cd Python-3.8.1
-		./configure
-    	make
-    	make test
-    	sudo make install
-		echo "python3 installed"
-		cd ..
+		sudo dnf install python3
 	fi
 }
 
@@ -34,26 +28,15 @@ function installPythonLibraries()
 function installVsCode()
 {
 	cd vscode
-	if [ -x "$(command -v dpkg)" ]
-	then
-		dpkg -i "code_1.42.0-1580986622_amd64.deb"
-	else
-		rpm -i "code-1.42.0-1580986751.el7.x86_64.rpm"
-	fi
+	rpm -i "code-1.42.0-1580986751.el7.x86_64.rpm"
 	cd ..
 }
 
 function installNodeJs()
 {
-	if [ -x "$(command -v dpkg)" ]
-	then
-		curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-		sudo apt-get install -y nodejs
-	else
-		sudo dnf install -y gcc-c++ make
-		curl -sL https://rpm.nodesource.com/setup_13.x | sudo -E bash -
-		sudo dnf install nodejs
-	fi
+	sudo dnf install -y gcc-c++ make
+	curl -sL https://rpm.nodesource.com/setup_13.x | sudo -E bash -
+	sudo dnf install nodejs
 }
 
 function installVsCodeExtenstion()
@@ -66,7 +49,7 @@ function movingFilesFromInstallDirToLocalExtenstionDir()
 	cp "" "$HOME/.vscode/codehelper"
 }
 
-echo "Bot Docs B 'CodeHelper' Installer Linux"
+echo "Bot Docs B 'CodeHelper' Installer Fedora-based Linux"
 echo
 
 echo "Installing Python3..."
@@ -90,3 +73,5 @@ echo "Installed Node JS"
 echo "Installing VS Code Extenstion 'CodeHelper'..."
 installVsCodeExtenstion
 echo "Installed VS Code Extenstion 'CodeHelper'"
+
+pause 'Press [Enter] key to exit...'
