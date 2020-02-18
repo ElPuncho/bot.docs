@@ -18,7 +18,7 @@ function installPython3()
 function installPythonLibraries()
 {
 	libs=(requests sys os beautifulsoup4 numpy sklearn2 scikit-learn scipy nltk)
-	for lib in ${lips[@]}
+	for lib in ${libs[@]}
 	do
 		python3 -m pip $lib
 		echo "Installing Python Library $lib"
@@ -28,7 +28,7 @@ function installPythonLibraries()
 function installVsCode()
 {
 	cd vscode
-	dpkg -i "code_1.42.0-1580986622_amd64.deb"
+	sudo dpkg -i "code_1.42.0-1580986622_amd64.deb"
 	cd ..
 }
 
@@ -40,7 +40,7 @@ function installNodeJs()
 
 function installVsCodeExtenstion()
 {
-	code "./codehelper/codehelper.vsix"
+	code "codehelper/codehelper.vsix"
 }
 
 function movingFilesFromInstallDirToLocalExtenstionDir()
