@@ -21,7 +21,7 @@ function installPythonLibraries()
 	sudo dnf install python3-pip
 	for lib in ${libs[@]}
 	do
-		python3 -m pip $lib
+		python3 -m pip install $lib
 		echo "Installing Python Library $lib"
 	done
 }
@@ -43,7 +43,8 @@ function installNodeJs()
 
 function installVsCodeExtenstion()
 {
-	code codehelper\codehelper-0.0.1.vsix
+	code --install-extension codehelper/codehelper-0.0.1.vsix
+	code
 }
 
 function movingFilesFromInstallDirToLocalExtenstionDir()
