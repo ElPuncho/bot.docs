@@ -18,6 +18,7 @@ function installPython3()
 function installPythonLibraries()
 {
 	libs=(requests sys os beautifulsoup4 numpy sklearn2 scikit-learn scipy nltk)
+	sudo apt-get install python3-pip 
 	for lib in ${libs[@]}
 	do
 		python3 -m pip $lib
@@ -34,13 +35,17 @@ function installVsCode()
 
 function installNodeJs()
 {
-	curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-	sudo apt-get install -y nodejs
+	if ! [ -x "$(command -v snap)" ]
+	then
+		sudo apt update
+		sudo apt install snapd
+	fi
+	sudo snap install node --classic --channel=13
 }
 
 function installVsCodeExtenstion()
 {
-	code "codehelper/codehelper.vsix"
+	code codehelper\codehelper-0.0.1.vsix
 }
 
 function movingFilesFromInstallDirToLocalExtenstionDir()
