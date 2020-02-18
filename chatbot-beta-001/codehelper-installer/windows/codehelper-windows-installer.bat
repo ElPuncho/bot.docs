@@ -59,5 +59,6 @@ EXIT /B 0
 
 
 :installVsCodeExtenstion
-code ".\codehelper\codehelper.vsix"
+code --install-extension codehelper\codehelper-0.0.1.vsix
+code
 EXIT /B 0
