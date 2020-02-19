@@ -1,6 +1,7 @@
 {
 	"name": "codehelper",
 	"displayName": "codeHelper",
+	"publisher": "BotDocsB",
 	"description": "let it search the function you need",
 	"version": "0.0.1",
 	"engines": {
