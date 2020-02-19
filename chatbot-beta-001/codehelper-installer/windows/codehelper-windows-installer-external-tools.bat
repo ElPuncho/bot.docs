@@ -1,6 +1,9 @@
 @ECHO OFF
 
 echo "Bot Docs B 'CodeHelper' Installer Windows 64 Bit"
+echo "Installing all needed tools for just installing the extension use the other batch file"
+echo "Needs to Restart after installing the tools with this batch file"
+echo "Please check the box with the 'set to windows PATH' otherwise this installer will fail"
 echo
 
 echo "Installing Python3..."
@@ -33,9 +36,7 @@ CD ..
 echo "Installed Node JS"
 echo
 
-echo "Installing VS Code Extenstion 'CodeHelper'..."
-code --install-extension codehelper\codehelper-0.0.1.vsix
-code
-echo "Installed VS Code Extenstion 'CodeHelper'"
+echo "please Restart the PC and run the other batch file to complete the installation process" 
+echo
 
 PAUSE
