@@ -11,5 +11,5 @@ if __name__ == "__main__":
         c.initSession()
         c.crawlQuery()
         result = c.executeFiltering()
-        c.closeSession()
+        #c.closeSession()
         print(result)
