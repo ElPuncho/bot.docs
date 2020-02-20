@@ -17,12 +17,24 @@ function installPython3()
 
 function installPythonLibraries()
 {
-	libs=(requests sys os beautifulsoup4 numpy sklearn2 scikit-learn scipy nltk)
+	libs=(requests sys os beautifulsoup4 numpy sklearn2 scikit-learn scipy)
 	sudo apt-get install python3-pip 
 	for lib in ${libs[@]}
 	do
 		python3 -m pip install $lib
 		echo "Installing Python Library $lib"
+	done
+	echo "Installing Python Library nltk"
+	sudo apt install python3-nltk
+}
+
+function installNeededNltkData()
+{
+	data=(stopwords averaged_perceptron_tagger)
+	for package in ${data[@]}
+	do
+		echo "Installing $package Data"
+		python3 -m nltk.downloader $package
 	done
 }
 
@@ -46,7 +58,6 @@ function installNodeJs()
 function installVsCodeExtenstion()
 {
 	code --install-extension codehelper/codehelper-0.0.1.vsix
-	code
 }
 
 function movingFilesFromInstallDirToLocalExtenstionDir()
@@ -68,6 +79,11 @@ installPythonLibraries
 echo "Installed all Python3 Libraries"
 echo
 
+echo "Installing needed Nltk Data"
+installNeededNltkData
+echo "Installed all needed Nltk Data"
+echo
+
 echo "Installing VS Code..."
 installVsCode
 echo "Installed VS code"
@@ -80,5 +96,8 @@ echo "Installed Node JS"
 echo "Installing VS Code Extenstion 'CodeHelper'..."
 installVsCodeExtenstion
 echo "Installed VS Code Extenstion 'CodeHelper'"
+echo
 
+echo "Restart the System now and the run VS Code as usual"
+echo
 pause 'Press [Enter] key to exit...'

@@ -26,6 +26,16 @@ function installPythonLibraries()
 	done
 }
 
+function installNeededNltkData()
+{
+	data=(stopwords averaged_perceptron_tagger)
+	for package in ${data[@]}
+	do
+		echo "Installing $package Data"
+		python3 -m nltk.downloader $package
+	done
+}
+
 function installVsCode()
 {
 	cd vscode
@@ -55,6 +65,8 @@ function movingFilesFromInstallDirToLocalExtenstionDir()
 echo "Bot Docs B 'CodeHelper' Installer Fedora-based Linux"
 echo
 
+sudo dnf update
+
 echo "Installing Python3..."
 installPython3
 echo
@@ -62,6 +74,11 @@ echo
 echo "Installing Python3 Libraries..."
 installPythonLibraries
 echo "Installed all Python3 Libraries"
+echo
+
+echo "Installing needed Nltk Data"
+installNeededNltkData
+echo "Installed all needed Nltk Data"
 echo
 
 echo "Installing VS Code..."
@@ -77,4 +94,6 @@ echo "Installing VS Code Extenstion 'CodeHelper'..."
 installVsCodeExtenstion
 echo "Installed VS Code Extenstion 'CodeHelper'"
 
+echo "Restart the System now and the run VS Code as usual"
+echo
 pause 'Press [Enter] key to exit...'
