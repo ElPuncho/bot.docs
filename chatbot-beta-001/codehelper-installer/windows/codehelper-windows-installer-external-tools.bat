@@ -22,6 +22,15 @@ SET libs=(requests sys os beautifulsoup4 numpy sklearn2 scikit-learn scipy nltk)
 echo "Installed all Python3 Libraries"
 echo
 
+echo "Installing Nltk Data ..."
+SET data=(stopwords averaged_perceptron_tagger)
+(FOR %%a in %data% DO (
+	echo "Installing %%a Data"
+	py -3 -m nltk.downloader %%a
+))
+echo "Installed all Nltk Data"
+echo
+
 echo "Installing VS Code..."
 CD vscode
 START /W VSCodeUserSetup-x64-1.42.1.exe
