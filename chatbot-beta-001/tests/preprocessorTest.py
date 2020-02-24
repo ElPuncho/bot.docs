@@ -32,8 +32,9 @@ class PreprocessorTest(unittest.TestCase):
         self.assertIsNotNone(self.preprocessor.getParagraphs())
 
     def testRemoveEmptyLines(self):
-        self.assertIsNotNone(self.preprocessor.removeEmptyLines())
-        for line in self.preprocessor.removeEmptyLines():
+        text = self.preprocessor.stemming()
+        self.assertIsNotNone(self.preprocessor.removeEmptyLines(text))
+        for line in self.preprocessor.removeEmptyLines(text):
             self.assertNotEqual(line, '')
 
     def testRemoveDuplicateLines(self):
@@ -80,9 +81,23 @@ class PreprocessorTest(unittest.TestCase):
             self.assertLessEqual(len(w1), len(w2))
 
     def testVectoriseData(self):
-        data = self.preprocessor.vectoriseData()
-        self.assertIsNotNone(data)
-        self.assertEqual(data.shape[0], len(self.preprocessor.stemming()))
+        tfidfMatrix = self.preprocessor.vectoriseData()
+        lines = self.preprocessor.removeEmptyLines(self.
+                                                   preprocessor.stemming())
+        self.assertIsNotNone(lines)
+        self.assertEqual(tfidfMatrix.shape[0], len(lines))
+
+    def testGetIndexOfEmptyLines(self):
+        lines = self.preprocessor.stemming()
+        self.assertIsNotNone(self.preprocessor.getIndexOfEmptyLines())
+        for index in self.preprocessor.getIndexOfEmptyLines():
+            self.assertEqual(lines[index], '')
+
+    def testGetLinesWithoutEmptyLines(self):
+        self.assertIsNotNone(self.preprocessor.getLinesWithoutEmptyLines())
+        for line in self.preprocessor.getLinesWithoutEmptyLines():
+            self.assertNotEqual(line, '')
+
 
 if __name__ == '__main__':
     unittest.main()
