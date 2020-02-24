@@ -23,11 +23,26 @@ class Preprocessor:
         self.userInput = userInput
         self.lines = self.fetchData().split('\n')
 
+    def getIndexOfEmptyLines(self):
+        textWithoutUserInput = self.stemming()[-1]
+        return [index for index in range(len(textWithoutUserInput))
+                if textWithoutUserInput[index] == '']
+
+    def getLinesWithoutEmptyLines(self):
+        text = self.removeDuplicateLines()
+        indexOfEmptyLines = self.getIndexOfEmptyLines()
+        for index in indexOfEmptyLines:
+            del text[index]
+        return text
+
     def vectoriseData(self):
         vectorizer = Pipeline([('vectorizer', CountVectorizer()),
                               ('tfidf', TfidfTransformer())])
-        X = vectorizer.fit_transform(self.stemming())
+        X = vectorizer.fit_transform(self.removeEmptyLines(self.stemming()))
         return X
+
+    def removeEmptyLines(self, text):
+        return [line for line in text if line != '']
 
     def stemming(self):
         words = str()
@@ -44,7 +59,8 @@ class Preprocessor:
         meaningfulWords = []
         words = str()
         tags = ['VB', 'VBP', 'VBD', 'VBG', 'VBN',
-                'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS', 'UH', 'NN', 'NNP']
+                'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS',
+                'UH', 'NN', 'NNS', 'NNP', 'NNPS', 'CD']
         text = self.negationHandling()
         for line in text:
             taggedWord = pos_tag(line.split())
@@ -106,10 +122,10 @@ class Preprocessor:
         return textWithUserInput
 
     def removeDuplicateLines(self):
-        lines = self.removeEmptyLines()
+        lines = self.removeBlanks()
         return list(dict.fromkeys(lines))
 
-    def removeEmptyLines(self):
+    def removeBlanks(self):
         lines = self.getParagraphs()
         return list(filter(None, lines))
 
