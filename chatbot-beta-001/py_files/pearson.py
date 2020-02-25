@@ -12,7 +12,7 @@ class Pearson:
 
     def generateResponse(self):
         response = str()
-        topKMatches = 3
+        topKMatches = 4
         indexTopKSentences = self.getIndexOfTopKMatches(topKMatches)
 
         if(self.correlationMatch()):
