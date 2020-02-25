@@ -24,7 +24,7 @@ class Preprocessor:
         self.lines = self.fetchData().split('\n')
 
     def getIndexOfEmptyLines(self):
-        textWithoutUserInput = self.stemming()[-1]
+        textWithoutUserInput = self.stemming()[:-1]
         return [index for index in range(len(textWithoutUserInput))
                 if textWithoutUserInput[index] == '']
 
@@ -42,7 +42,7 @@ class Preprocessor:
         return X
 
     def removeEmptyLines(self, text):
-        return [line for line in text if line != '']
+        return [line for line in text if line is not '']
 
     def stemming(self):
         words = str()
