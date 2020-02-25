@@ -31,6 +31,14 @@ class pearsonTest(unittest.TestCase):
         self.assertIsNotNone(index)
         self.assertEqual(len(index), topKMatches)
 
+    def testTooManyChars(self):
+        textShort = ''.join(['a' for c in range(2000)])
+        textLong = ''.join(['a' for c in range(2001)])
+        self.assertIsNotNone(self.pearson.tooManyChars(textShort))
+        self.assertIsNotNone(self.pearson.tooManyChars(textLong))
+        self.assertTrue(self.pearson.tooManyChars(textLong))
+        self.assertFalse(self.pearson.tooManyChars(textShort))
+
     def testGenerateResponse(self):
         self.assertIsNotNone(self.pearson.generateResponse())
 
