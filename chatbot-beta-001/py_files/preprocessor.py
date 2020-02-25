@@ -58,9 +58,9 @@ class Preprocessor:
     def meaningfulWords(self):
         meaningfulWords = []
         words = str()
-        tags = ['VB', 'VBP', 'VBD', 'VBG', 'VBN',
+        tags = ['VB', 'VBP', 'VBD', 'VBG',
                 'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS',
-                'UH', 'NN', 'NNS', 'NNP', 'NNPS', 'CD']
+                'NN', 'NNS', 'NNP', 'NNPS', 'CD']
         text = self.negationHandling()
         for line in text:
             taggedWord = pos_tag(line.split())
