@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append('..')
 import py_files.filesystemhandler as fsh
 import py_files.crawler as cwl
 import py_files.preprocessor as pre
 import py_files.pearson as pear
-import py_files.kmeans as kmeans
-import py_files.filterProcessAssembly as fpa
+
 
 class ControlManager:
     def __init__(self, query):
@@ -34,5 +31,8 @@ class ControlManager:
                                                   self.query.split(":")[1] +
                                                   ".txt")
         searchString = self.query.split(":")[2]
-        assemblyLine = fpa.FilterProcessAssembly(file, searchString)
-        return assemblyLine.assembleFilterPipe().generateResponse()
+        preprocessor = pre.Preprocessor(file, searchString)
+        tfidfMatrix = preprocessor.vectoriseData()
+        linesToPickRelevantLinesFrom = preprocessor.getLinesWithoutEmptyLines()
+        pearson = pear.Pearson(tfidfMatrix, linesToPickRelevantLinesFrom)
+        return pearson.generateResponse()
