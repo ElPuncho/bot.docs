@@ -40,7 +40,7 @@ echo
 
 echo "Installing Node JS..."
 CD nodejs
-START /W node-v12.16.0-x64.msi
+START /W node-v13.9.0-x64.msi
 CD ..
 echo "Installed Node JS"
 echo
