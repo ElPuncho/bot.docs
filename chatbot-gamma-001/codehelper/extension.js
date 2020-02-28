@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode'); 
-const { spawn } = require('child_process')
+const { spawn } = require('child_process');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -10,6 +10,10 @@ const { spawn } = require('child_process')
  * @param {vscode.ExtensionContext} context
  */
 
+//const variables
+const pythonCommand = (process.platform == "linux") ? 'python3' : 'python';
+const pythonFile = require('os').homedir() + ((process.platform == "linux") ? "/.vscode/extensions/botdocsb.codehelper-0.0.1/" : "\\.vscode\\extensions\\botdocsb.codehelper-0.0.1\\") + "terminal.py";
+
 function showQueryAndResultAsVsMessage(query, result)
 {
 	vscode.window.showInformationMessage(`your Query: ${query} | your Result: ${result}`);
@@ -17,11 +21,10 @@ function showQueryAndResultAsVsMessage(query, result)
 
 function callPythonScript(script, args)
 {
-	var pythonCommand = (process.platform == "linux") ? 'python3' : 'python';
 	const sensor = spawn(pythonCommand, [script, args]);
 	sensor.stdout.on('data', function(data)
 	{
-		console.log(String(data))
+		console.log(String(data));
 		showQueryAndResultAsVsMessage(args, String(data));
 	});
 }
@@ -37,13 +40,12 @@ function getHelp()
 
 async function getUserInputAndExecuteQuery()
  {
-	const pythonScript = 'terminal.py'
 	const query = await vscode.window.showInputBox
 	({
 		value: 'proglanguage:lib:function or help for help',
 		placeHolder: 'proglanguage:lib:function'
 	});
-	query === 'help' ? getHelp() : (query.split(':').length === 3) && (query !== 'proglanguage:lib:function') ? callPythonScript(pythonScript, query) : vscode.window.showInformationMessage("Error: wrong input try again");
+	query === 'help' ? getHelp() : (query.split(':').length === 3) && (query !== 'proglanguage:lib:function') ? callPythonScript(pythonFile, query) : vscode.window.showInformationMessage("Error: wrong input try again");
  }
 
 function activate(context) {
