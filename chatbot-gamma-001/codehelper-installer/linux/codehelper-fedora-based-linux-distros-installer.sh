@@ -48,6 +48,7 @@ function installNodeJs()
 	sudo dnf install curl
 	curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 	sudo dnf install nodejs
+}
 
 function installVsCodeExtenstion()
 {
