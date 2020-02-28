@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import py_files.filesystemhandler as fsh
 import py_files.crawler as cwl
 import py_files.preprocessor as pre
