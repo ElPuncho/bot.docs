@@ -24,7 +24,7 @@ class Preprocessor:
         self.lines = self.fetchData().split('\n')
 
     def getIndexOfEmptyLines(self):
-        textWithoutUserInput = self.stemming()[-1]
+        textWithoutUserInput = self.stemming()[:-1]
         return [index for index in range(len(textWithoutUserInput))
                 if textWithoutUserInput[index] == '']
 
@@ -42,7 +42,7 @@ class Preprocessor:
         return X
 
     def removeEmptyLines(self, text):
-        return [line for line in text if line != '']
+        return [line for line in text if line is not '']
 
     def stemming(self):
         words = str()
@@ -58,9 +58,9 @@ class Preprocessor:
     def meaningfulWords(self):
         meaningfulWords = []
         words = str()
-        tags = ['VB', 'VBP', 'VBD', 'VBG', 'VBN',
+        tags = ['VB', 'VBP', 'VBD', 'VBG',
                 'JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS',
-                'UH', 'NN', 'NNS', 'NNP', 'NNPS', 'CD']
+                'NN', 'NNS', 'NNP', 'NNPS', 'CD']
         text = self.negationHandling()
         for line in text:
             taggedWord = pos_tag(line.split())

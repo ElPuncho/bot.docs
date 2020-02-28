@@ -12,28 +12,35 @@ class Pearson:
 
     def generateResponse(self):
         response = str()
-        topKMatches = 20
+        topKMatches = 4
         indexTopKSentences = self.getIndexOfTopKMatches(topKMatches)
 
         if(self.correlationMatch()):
-            for i in range(indexTopKSentences.size-1, -1, -1):
-                response += self.sentences[indexTopKSentences[i]]+"\n"
+            for i in range(len(indexTopKSentences)-1, -1, -1):
+                response += self.sentences[indexTopKSentences[i]]+"\n\n"
             return response
         else:
             response += "Sorry dont know about that one"
             return response
 
     def correlationMatch(self):
-        highestCorrelation = np.sort(self.pearsonCoeffs)[-2]
+        highestCorrelation = np.sort(self.pearsonCoeffs)[-1]
         if(highestCorrelation <= 0):
             return False
         else:
             return True
 
+    def tooManyChars(self, text):
+        charLimit = 2000
+        if len(text) > charLimit:
+            return True
+        else:
+            return False
+
     def getIndexOfTopKMatches(self, k):
         indexTopKSentences = np.asarray(self.pearsonCoeffs)
-        indexTopKSentences = indexTopKSentences.argsort()[-(k+1):-1]
-        return indexTopKSentences
+        return [index for index in indexTopKSentences.argsort()
+                if not self.tooManyChars(self.sentences[index])][-k:]
 
     def getPearsonCoeffsOfUserInputAndData(self):
         coeff = list()
