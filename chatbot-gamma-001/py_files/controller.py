@@ -21,8 +21,11 @@ class ControlManager:
     def crawlQuery(self):
         self.crawlerObject = cwl.Crawler(self.query)
         lib = self.crawlerObject.getLibUrl()
-        text = self.crawlerObject.getTextFromWebsite(lib)
-        self.crawlerObject.writeTextToFile(text)
+        if lib is not None:
+            text = self.crawlerObject.getTextFromWebsite(lib)
+            self.crawlerObject.writeTextToFile(text)
+            return False
+        return True
 
     def executeFiltering(self):
         file = self.fileHandler.getSearchFilePath(self.query.split(":")[0],

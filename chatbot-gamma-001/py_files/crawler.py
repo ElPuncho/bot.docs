@@ -20,7 +20,10 @@ class Crawler:
         searchUrl += ":5x4nlnwradj&key=AIzaSyBa0tj2m9x3k7ZbkKcia30TLiG6yzulFoY"
         request = requests.get(searchUrl)
         data = request.json()
-        return data["items"][0]["link"]
+        try:
+            return data["items"][0]["link"]
+        except KeyError:
+            return None
 
     def getTextFromWebsite(self, URL):
         request = requests.get(URL)

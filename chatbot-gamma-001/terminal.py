@@ -9,7 +9,12 @@ if __name__ == "__main__":
     else:
         c = con.ControlManager(sys.argv[1])
         c.initSession()
-        c.crawlQuery()
-        result = c.executeFiltering()
-        #c.closeSession()
-        print(result)
+        statusCode = c.crawlQuery()
+        if not statusCode:
+            result = c.executeFiltering()
+            print(result)
+        else:
+            limitExceededMessage = "Limit of 120 Google "
+            limitExceededMessage += "Queries per Day exceeded"
+            limitExceededMessage += ", please wait one Day"
+            print(limitExceededMessage)
