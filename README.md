@@ -1,4 +1,4 @@
-bot.docs B "codeHelper"
+<h1>bot.docs B "codeHelper"</h1>
 
 for the installation files go to chatbot-gamma-001/codehelper-installer
 
