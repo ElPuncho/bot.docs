@@ -1,4 +1,4 @@
-<h3>bot.docs B "codeHelper"</h3>
+<h2>bot.docs B "codeHelper"</h2>
 <ul>
         <li>for the installation files go to chatbot-gamma-001/codehelper-installer</li>
 </ul>
@@ -12,20 +12,24 @@
         <li>64 bit system</li>
         <li>bash</li>
 </ul>
-        - additonal Requirements (Installer will install those):
-                -python3 (64 bit)
-                -python3 Libraries
-                        -nltk
-                                -stopwords data
-                                -averaged_perceptron_tagger
-                        -requests
-                        -os
-                        -sys
-                        -beautifulsoup4
-                        -numpy
-                        -sklearn2
-                        -scikit-learn
-                        -scipy
+<b>additonal Requirements (Installer will install those):</b><br>
+<ul>
+        <li>python3 (64 bit)</li>
+</ul>
+python3 Libraries:<br>
+<ul>
+        <li>nltk</li>
+        <li>stopwords data</li>
+        <li>averaged_perceptron_tagger</li>
+        <li>requests</li>
+        <li>os</li>
+        <li>sys</li>
+        <li>beautifulsoup4</li>
+        <li>numpy</li>
+        <li>sklearn2</li>
+        <li>scikit-learn</li>
+        <li>scipy</li>
+</ul>
                 -VS code (64 bit)
                 -nodeJs (64 bit)
 
