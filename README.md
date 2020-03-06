@@ -53,7 +53,7 @@ Others:<br>
         <li>press enter and enjoy</li>
 </ol>
 
-<h3>Linux Installation</h3><br>
+<h3>Linux Installation</h3>
 <b>System Requirements:</b><br>
 <ul>
         <li>internet connection while installation and usage of the extension</li>
