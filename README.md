@@ -4,7 +4,7 @@ for the installation files go to chatbot-gamma-001/codehelper-installer
 
 <h3>Windows Installation</h3>
 
-<b>System Requirements:</b>
+<b>System Requirements:</b><br>
         - internet connection while installation and usage of the extension
         - windows system
         - 64 bit system
@@ -26,7 +26,7 @@ for the installation files go to chatbot-gamma-001/codehelper-installer
                 -VS code (64 bit)
                 -nodeJs (64 bit)
 
-Installation:
+<b>Installation:</b>
         - copy the windows folder in codehelper-installer to a local place
         - open a terminal and go to this directory
         - run codehelper-windows-installer-external-tools.bat
@@ -41,9 +41,9 @@ Installation:
         - type your query example. python:math:how to use sine
         - press enter and enjoy
 
-Linux Installation
+<h3>Linux Installation</h3>
 
-System Requirements:
+<b>System Requirements:</b>
         - internet connection while installation and usage of the extension
         - ubuntu or fedora based linux system
         - 64 bit system
@@ -65,7 +65,7 @@ System Requirements:
                 -VS code (64 bit)
                 -nodeJs (64 bit)
 
-Installation:
+<b>Installation:</b>
         - copy the linux folder in codehelper-installer to a local place
         - open a terminal and go to this directory
         - when in folder chmod +x the specific shell file for your system
