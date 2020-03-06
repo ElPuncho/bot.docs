@@ -1,14 +1,17 @@
 <h3>bot.docs B "codeHelper"</h3>
-
-for the installation files go to chatbot-gamma-001/codehelper-installer
+<ul>
+        <li>for the installation files go to chatbot-gamma-001/codehelper-installer</li>
+</ul>
 
 <h3>Windows Installation</h3>
 
 <b>System Requirements:</b><br>
-        - internet connection while installation and usage of the extension
-        - windows system
-        - 64 bit system
-        - bash
+<ul>
+        <li>internet connection while installation and usage of the extension</li>
+        <li>windows system</li>
+        <li>64 bit system</li>
+        <li>bash</li>
+</ul>
         - additonal Requirements (Installer will install those):
                 -python3 (64 bit)
                 -python3 Libraries
@@ -27,7 +30,7 @@ for the installation files go to chatbot-gamma-001/codehelper-installer
                 -nodeJs (64 bit)
 
 <b>Installation:</b><br>
-<ul>
+<ol>
         <li>copy the windows folder in codehelper-installer to a local place</li>
         <li>open a terminal and go to this directory</li>
         <li>run codehelper-windows-installer-external-tools.bat</li>
@@ -41,7 +44,7 @@ for the installation files go to chatbot-gamma-001/codehelper-installer
         <li>type code helper and press enter</li>
         <li>type your query example. python:math:how to use sine</li>
         <li>press enter and enjoy</li>
-</ul>
+</ol>
 
 <h3>Linux Installation</h3>
 
