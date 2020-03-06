@@ -53,8 +53,8 @@ Others:<br>
         <li>press enter and enjoy</li>
 </ol>
 
-<h3>Linux Installation</h3>
-
+<h3>Linux Installation</h3><br>
+<b>System Requirements:</b><br>
 <ul>
         <li>internet connection while installation and usage of the extension</li>
         <li>ubuntu or fedora based linux system</li>
@@ -86,7 +86,7 @@ Others:<br>
 </ul>
 
 <b>Installation:</b><br>
-<ul>
+<ol>
         <li>copy the linux folder in codehelper-installer to a local place</li>
         <li>open a terminal and go to this directory</li>
         <li>when in folder chmod +x the specific shell file for your system</li>
@@ -96,4 +96,4 @@ Others:<br>
         <li>type code helper and press enter</li>
         <li>type your query example. python:math:how to use sine</li>
         <li>press enter and enjoy</li>
-</ul>
+</ol>
