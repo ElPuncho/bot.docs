@@ -1,10 +1,10 @@
-<h1>bot.docs B "codeHelper"</h1>
+<h3>bot.docs B "codeHelper"</h3>
 
 for the installation files go to chatbot-gamma-001/codehelper-installer
 
-Windows Installation
+<h3>Windows Installation</h3>
 
-System Requirements:
+<b>System Requirements:<b/>
         - internet connection while installation and usage of the extension
         - windows system
         - 64 bit system
