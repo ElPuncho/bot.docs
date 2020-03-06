@@ -4,7 +4,7 @@ for the installation files go to chatbot-gamma-001/codehelper-installer
 
 <h3>Windows Installation</h3>
 
-<b>System Requirements:<b/>
+<b>System Requirements:</b>
         - internet connection while installation and usage of the extension
         - windows system
         - 64 bit system
